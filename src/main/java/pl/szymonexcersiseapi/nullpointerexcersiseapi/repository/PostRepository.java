@@ -1,9 +1,11 @@
 package pl.szymonexcersiseapi.nullpointerexcersiseapi.repository;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import pl.szymonexcersiseapi.nullpointerexcersiseapi.model.Post;
+
 
 import java.util.List;
 
@@ -20,6 +22,21 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     //List<Post> findAllByTitle(String title);
 
     //#3 za pomoca samej nazwy metody
+
     List<Post>findAllByTitle(String title);
+
+    // pobieranie wszystkich postow - left join uzyty w celu pobrania wszystkich postow nawet takich,
+    // ktore nie maja komentarzy, interfejs Pageable uzyty w celu stronicowania i pobrania rzadanej ilosci postow
+    // z konkretnej strony
+    // w tej sytuacji generowane jest jedno zapytanie pobierajace posty z komentarzami ale pobierane sa wszystkie posty z db
+    // czyli np 100k postow i dopiero pozniej sa one obcinane np do 10, nie jest to optymalne
+    @Query("select p from Post p" +
+           " left join fetch p.comment")
+    List<Post> findAllPosts(Pageable page);
+
+    // w tej sytuacji tworzy nam sie 10 zapytan ale juz z limit'em dzieki czmu nie pobieramy wszystkich postow z db
+    // niestety wracamy do problemu n+1
+    @Query("select p from Post p")
+    List<Post> findAllPostsWitLimit(Pageable page);
 
 }

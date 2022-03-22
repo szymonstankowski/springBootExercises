@@ -2,6 +2,7 @@ package pl.szymonexcersiseapi.nullpointerexcersiseapi.service;
 
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import pl.szymonexcersiseapi.nullpointerexcersiseapi.model.Comment;
 import pl.szymonexcersiseapi.nullpointerexcersiseapi.model.Post;
@@ -17,7 +18,7 @@ public class PostService {
     private final PostRepository postRepository;
 
     public List<Post> getPosts(){
-       return postRepository.findAll();
+       return postRepository.findAllPostsWitLimit(PageRequest.of(1,10));
     }
 
     public Post getPost(long id){
