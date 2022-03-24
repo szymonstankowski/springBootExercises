@@ -3,7 +3,6 @@ package pl.szymonexcersiseapi.nullpointerexcersiseapi.repository;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import pl.szymonexcersiseapi.nullpointerexcersiseapi.model.Post;
 
 
@@ -37,6 +36,6 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     // w tej sytuacji tworzy nam sie 10 zapytan ale juz z limit'em dzieki czmu nie pobieramy wszystkich postow z db
     // niestety wracamy do problemu n+1
     @Query("select p from Post p")
-    List<Post> findAllPostsWitLimit(Pageable page);
+    List<Post> findAllPosts(Pageable page);
 
 }

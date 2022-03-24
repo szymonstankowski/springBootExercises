@@ -18,7 +18,7 @@ public class Post {
     private LocalDateTime created;
 
     @OneToMany
-    @JoinColumn(name = "post_id")
+    @JoinColumn(name = "postId")
     private List<Comment> comment;
 
 }
