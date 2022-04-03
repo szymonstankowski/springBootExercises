@@ -33,9 +33,6 @@ public interface PostRepository extends JpaRepository<Post, Long> {
            " left join fetch p.comment")
     List<Post> findAllPosts(Pageable page);
 
-    // w tej sytuacji tworzy nam sie 10 zapytan ale juz z limit'em dzieki czmu nie pobieramy wszystkich postow z db
-    // niestety wracamy do problemu n+1
-    @Query("select p from Post p")
-    List<Post> findAllPosts(Pageable page);
+
 
 }
