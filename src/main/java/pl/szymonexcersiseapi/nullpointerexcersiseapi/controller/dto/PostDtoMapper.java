@@ -1,7 +1,6 @@
-package pl.szymonexcersiseapi.nullpointerexcersiseapi.controller;
+package pl.szymonexcersiseapi.nullpointerexcersiseapi.controller.dto;
 
 
-import pl.szymonexcersiseapi.nullpointerexcersiseapi.controller.dto.PostDto;
 import pl.szymonexcersiseapi.nullpointerexcersiseapi.model.Post;
 
 import java.util.List;
@@ -12,9 +11,9 @@ public class PostDtoMapper {
     private PostDtoMapper() {
     }
 
-    public static List<PostDto> mapToPostDtos(List<Post>posts){
+    public static List<PostDto> mapToPostDto(List<Post>posts){
         return posts.stream()
-                .map(post -> mapToPostDto(post))
+                .map(PostDtoMapper::mapToPostDto)
                 .collect(Collectors.toList());
     }
 

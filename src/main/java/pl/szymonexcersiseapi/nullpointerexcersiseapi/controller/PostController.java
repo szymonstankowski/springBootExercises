@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 import pl.szymonexcersiseapi.nullpointerexcersiseapi.controller.dto.PostDto;
+import pl.szymonexcersiseapi.nullpointerexcersiseapi.controller.dto.PostDtoMapper;
 import pl.szymonexcersiseapi.nullpointerexcersiseapi.model.Post;
 import pl.szymonexcersiseapi.nullpointerexcersiseapi.service.PostService;
 
@@ -15,8 +16,6 @@ public class PostController {
 
     private final PostService postService;
 
-
-
     @GetMapping("/posts")
     //przekazywany parametr page musi byc typu Integer poniewaz int nie przyjmuje nulla i powodowalo to ze ten "opcjonalny" parametr wcale taki nei byl /
     // i swagger dawal blad "message": "Direction must not be null!",
@@ -27,7 +26,7 @@ public class PostController {
 
         Sort.Direction sortDirection = sort != null ? sort: Sort.Direction.ASC;
 
-        return PostDtoMapper.mapToPostDtos(postService.getPosts(pageNumber,sortDirection));
+        return PostDtoMapper.mapToPostDto(postService.getPosts(pageNumber,sortDirection));
 
     }
     @GetMapping("/posts/comments")

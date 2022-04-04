@@ -10,7 +10,6 @@ import pl.szymonexcersiseapi.nullpointerexcersiseapi.repository.CommentRepositor
 import pl.szymonexcersiseapi.nullpointerexcersiseapi.repository.PostRepository;
 
 import javax.transaction.Transactional;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
