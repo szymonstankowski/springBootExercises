@@ -35,32 +35,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable();
         http
                 .authorizeRequests()
-                .antMatchers("/swagger-ui.html").permitAll()
-                .antMatchers("/v2/api-docs").permitAll()
-                .antMatchers("/webjars/***").permitAll()
-                .antMatchers("/swagger-resources/**").permitAll()
-                .antMatchers("/h2-console/**").permitAll()
+                .antMatchers("/v2/api-docs", "/webjars/**", "/swagger-resources/**", "/h2-console/**", "/swagger-ui.html").permitAll()
                 .anyRequest().authenticated()
                 .and()
-             //   .addFilter(authenticationFilter())
-                .formLogin().permitAll()
-                .and()
+                .addFilter(authenticationFilter())
                 .exceptionHandling()
-                .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED));
-    }
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources/**", "/configuration/**", "/swagger-ui.html", "/webjars/**");
+                .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
+                .and()
+                .csrf().disable();
     }
 
-//    public JsonObjectAuthenticationFilter authenticationFilter() throws Exception{
-//        JsonObjectAuthenticationFilter authenticationFilter = new JsonObjectAuthenticationFilter(objectMapper);
-//        authenticationFilter.setAuthenticationSuccessHandler(successHandler);
-//        authenticationFilter.setAuthenticationFailureHandler(failureHandler);
-//        authenticationFilter.setAuthenticationManager(super.authenticationManager());
-//        return authenticationFilter;
-//    }
+    public JsonObjectAuthenticationFilter authenticationFilter() throws Exception{
+        JsonObjectAuthenticationFilter authenticationFilter = new JsonObjectAuthenticationFilter(objectMapper);
+        authenticationFilter.setAuthenticationSuccessHandler(successHandler);
+        authenticationFilter.setAuthenticationFailureHandler(failureHandler);
+        authenticationFilter.setAuthenticationManager(super.authenticationManager());
+        return authenticationFilter;
+    }
 }
